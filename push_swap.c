@@ -22,7 +22,6 @@ int	copy_array(int stack_temp[N], int stack_input[N][3])
 	while (i < N)
 	{
 		stack_temp[i] = stack_input[i][0];
-		stack_input[i][1] = i;
 		i++;
 	}
 	return (0);
@@ -78,97 +77,96 @@ int	find_moves(int stack_temp[N], int stack_input[N][3])
 
 int	push(int stack_input[N][3], int i, int *stack_counter)
 {
-	int	j;
-
-	j = i + 1;
-	while(i < *stack_counter)
+	while(i < *stack_counter - 1)
 	{
-		if(j > *stack_counter) j = 0;
-		stack_input[i][0] = stack_input[j][0];
-		stack_input[i][1] = stack_input[j][1];
-		stack_input[i][2] = stack_input[j][2];
+		stack_input[i][0] = stack_input[i + 1][0];
+		stack_input[i][1] = stack_input[i + 1][1];
+		stack_input[i][2] = stack_input[i + 1][2];
 		if(stack_input[i][2] > 0) stack_input[i][2]--;
 		if(stack_input[i][2] < 0) stack_input[i][2]++;
 		i++;
-		j++;
 	}
 	(*stack_counter)--;
 	return (0);
 }
 
-int	sort_stack(int stack_temp[N], int stack_input[N][3])
+int	swap(int stack_input[N][3], int i, int *stack_counter)
+{
+	int	j;
+	int	swap;
+
+	if (i == *stack_counter - 1)
+		j = 0;
+	else
+		j = i + 1;
+	if (stack_input[i][2] > 0 && stack_input[j][2] < 0)
+	{
+		swap = stack_input[i][0];
+		stack_input[i][0] = stack_input[j][0];
+		stack_input[j][0] = swap;
+		swap = stack_input[i][1];
+		stack_input[i][1] = stack_input[j][1];
+		stack_input[j][1] = swap;
+		stack_input[i][2]--;
+		stack_input[j][2]++;
+	}
+	return (0);
+}
+
+int	print(int stack_temp[N], int stack_input[N][3], int *stack_counter)
 {
 	int	i;
-	int	j;
-	int	k;
-	int	swap;
-	int	stack_counter;
 
 	i = 0;
-	j = 1;
-	stack_counter = N;
-	k = 0;
-	while (k < N)
-		printf("%d, ", stack_temp[k++]);
+	while (i < *stack_counter)
+		printf("%d,\t", stack_input[i++][0]);
 	printf("\n");
-	while (stack_counter != 0)
-	{
-		if (i > stack_counter) i = 0;
-		if (j > stack_counter) j = 0;
-		if (stack_input[j][2] == 0)
-		{
-			stack_temp[stack_input[j][1]] = stack_input[j][0];
-			push(stack_input, i, &stack_counter);
-
-		printf("stack_temp[%d] = , ", stack_input[j][1]); //, stack_temp[stack_input[j][1]]);
-
-		}
-		if (i > stack_counter) i = 0;
-		if (j > stack_counter) j = 0;
-		if (stack_input[i][2] > 0 && stack_input[j][2] < 0)
-		{
-			swap = stack_input[i][0];
-			stack_input[i][0] = stack_input[j][0];
-			stack_input[j][0] = swap;
-			swap = stack_input[i][1];
-			stack_input[i][1] = stack_input[j][1];
-			stack_input[j][1] = swap;
-			stack_input[i][2]--;
-			stack_input[j][2]++;
-		}
-		i++;
-		j++;
-	}
-		printf("\n");
-
+	i = 0;
+	while (i < *stack_counter)
+		printf("%d,\t", stack_input[i++][1] + 1);
+	printf("\n");
+	i = 0;
+	while (i < *stack_counter)
+		printf("%d,\t", stack_input[i++][2]);
+	printf("\n");
+	i = 0;
+	while (i < N)
+		printf("%d,\t", stack_temp[i++]);
+	printf("\n");
+	printf("\n");
 	return (0);
 }
 
 int	main(void)
 {
-	int	i;
+	int	j;
 	int	stack_input[N][3] = {{1}, {100}, {3}, {20}, {9}, {2}, {5}, {11}, {4}, {90}};
 	int	stack_temp[N];
+	int	stack_counter;
+	int	stop_while;
 
+	stack_counter = N;
+	stop_while = 0;
 	copy_array(stack_temp, stack_input);
 	bubble_sort(stack_temp);
 	find_moves(stack_temp, stack_input);
 	copy_array(stack_temp, stack_input);
-	sort_stack(stack_temp, stack_input);
-	i = 0;
-	while (i < N)
-		printf("%d, ", stack_input[i++][0]);
-	printf("\n");
-	i = 0;
-	while (i < N)
-		printf("%d, ", stack_input[i++][1]);
-	printf("\n");
-	i = 0;
-	while (i < N)
-		printf("%d, ", stack_input[i++][2]);
-	printf("\n");
-	i = 0;
-	while (i < N)
-		printf("%d, ", stack_temp[i++]);
+	print(stack_temp, stack_input, &stack_counter);
+	while (stack_counter != stop_while)
+	{
+		stop_while = stack_counter;
+		j = 0;
+		while ( j < stack_counter)
+		{
+			swap(stack_input, j, &stack_counter);
+			if (stack_input[j][2] == 0)
+			{
+				stack_temp[stack_input[j][1]] = stack_input[j][0];
+				push(stack_input, j, &stack_counter);
+				print(stack_temp, stack_input, &stack_counter);
+			}
+		j++;
+		}
+	}
 	return (0);
 }
