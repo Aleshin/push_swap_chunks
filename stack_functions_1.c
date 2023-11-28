@@ -38,8 +38,8 @@ int	push_b(t_stacks *stacks, int j)
 	i = stacks->stack_b_counter;
 	while (i > stacks->stack_b_pointer)
 	{
-		stacks->stack_b[i][0] = stacks->stack_b[i][0];
-		stacks->stack_b[i][1] = stacks->stack_b[i][1];
+		stacks->stack_b[i][0] = stacks->stack_b[i - 1][0];
+		stacks->stack_b[i][1] = stacks->stack_b[i - 1][1];
 		i--;
 	}
 	stacks->stack_b[i][0] = stacks->stack_a[j][0];

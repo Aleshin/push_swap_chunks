@@ -113,7 +113,7 @@ int	main(void)
 	bubble_sort(&stacks);
 	find_moves(&stacks);
 	print(&stacks);
-	while (stacks.stack_a_counter != 0)
+	while (stacks.stack_a_counter > 0)
 	{
 		j = 0;
 		if (stop_while == stacks.stack_a_counter)
