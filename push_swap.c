@@ -10,24 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#define N 10
+#include "push_swap.h"
 
-int	copy_array(int stack_temp[N], int stack_input[N][3])
+int	init_array(t_stacks *stacks)
 {
 	int	i;
 
 	i = 0;
 	while (i < N)
 	{
-		stack_temp[i] = stack_input[i][0];
+		stacks->stack_temp[i] = stacks->stack_a[i][0];
+		stacks->stack_b[i][1] = -1;
+		stacks->stack_b[i][0] = 0;
 		i++;
 	}
 	return (0);
 }
 
-int	bubble_sort(int *stack_temp)
+int	bubble_sort(t_stacks *stacks)
 {
 	int	i;
 	int	j;
@@ -39,11 +39,11 @@ int	bubble_sort(int *stack_temp)
 		j = 0;
 		while (j < N - 1)
 		{
-			if (stack_temp[j] > stack_temp[j + 1])
+			if (stacks->stack_temp[j] > stacks->stack_temp[j + 1])
 			{
-				swap = stack_temp[j];
-				stack_temp[j] = stack_temp[j + 1];
-				stack_temp[j + 1] = swap;
+				swap = stacks->stack_temp[j];
+				stacks->stack_temp[j] = stacks->stack_temp[j + 1];
+				stacks->stack_temp[j + 1] = swap;
 			}
 			j++;
 		}
@@ -52,7 +52,7 @@ int	bubble_sort(int *stack_temp)
 	return (0);
 }
 
-int	find_moves(int stack_temp[N], int stack_input[N][3])
+int	find_moves(t_stacks *stacks)
 {
 	int	i;
 	int	j;
@@ -61,77 +61,39 @@ int	find_moves(int stack_temp[N], int stack_input[N][3])
 	while (i < N)
 	{
 		j = 0;
-		while (stack_input[i][0] != stack_temp[j])
+		while (stacks->stack_a[i][0] != stacks->stack_temp[j])
 			j++;
-		stack_input[i][1] = j;
+		stacks->stack_a[i][1] = j;
 		if ((i <= j && j - i < N / 2) || (i >= j && i - j < N / 2))
-			stack_input[i][2] = j - i;
+			stacks->stack_a[i][2] = j - i;
 		else if (i < j)
-			stack_input[i][2] = -i - N + j;
+			stacks->stack_a[i][2] = -i - N + j;
 		else
-			stack_input[i][2] = N - i + j;
+			stacks->stack_a[i][2] = N - i + j;
 		i++;
 	}
 	return (0);
 }
 
-int	push(int stack_input[N][3], int i, int *stack_counter)
-{
-	while(i < *stack_counter - 1)
-	{
-		stack_input[i][0] = stack_input[i + 1][0];
-		stack_input[i][1] = stack_input[i + 1][1];
-		stack_input[i][2] = stack_input[i + 1][2];
-		if(stack_input[i][2] > 0) stack_input[i][2]--;
-		if(stack_input[i][2] < 0) stack_input[i][2]++;
-		i++;
-	}
-	(*stack_counter)--;
-	return (0);
-}
-
-int	swap(int stack_input[N][3], int i, int *stack_counter)
-{
-	int	j;
-	int	swap;
-
-	if (i == *stack_counter - 1)
-		j = 0;
-	else
-		j = i + 1;
-	if (stack_input[i][2] > 0 && stack_input[j][2] < 0)
-	{
-		swap = stack_input[i][0];
-		stack_input[i][0] = stack_input[j][0];
-		stack_input[j][0] = swap;
-		swap = stack_input[i][1];
-		stack_input[i][1] = stack_input[j][1];
-		stack_input[j][1] = swap;
-		stack_input[i][2]--;
-		stack_input[j][2]++;
-	}
-	return (0);
-}
-
-int	print(int stack_temp[N], int stack_input[N][3], int *stack_counter)
+int	print(t_stacks *stacks)
 {
 	int	i;
 
 	i = 0;
-	while (i < *stack_counter)
-		printf("%d,\t", stack_input[i++][0]);
+	while (i < stacks->stack_a_counter)
+		printf("%d,\t", stacks->stack_a[i++][0]);
 	printf("\n");
 	i = 0;
-	while (i < *stack_counter)
-		printf("%d,\t", stack_input[i++][1] + 1);
+	while (i < stacks->stack_a_counter)
+		printf("%d,\t", stacks->stack_a[i++][1] + 1);
 	printf("\n");
 	i = 0;
-	while (i < *stack_counter)
-		printf("%d,\t", stack_input[i++][2]);
+	while (i < stacks->stack_a_counter)
+		printf("%d,\t", stacks->stack_a[i++][2]);
 	printf("\n");
 	i = 0;
-	while (i < N)
-		printf("%d,\t", stack_temp[i++]);
+	while (i < stacks->stack_b_counter)
+		printf("%d,\t", stacks->stack_b[i++][0]);
 	printf("\n");
 	printf("\n");
 	return (0);
@@ -139,33 +101,44 @@ int	print(int stack_temp[N], int stack_input[N][3], int *stack_counter)
 
 int	main(void)
 {
-	int	j;
-	int	stack_input[N][3] = {{1}, {100}, {3}, {20}, {9}, {2}, {5}, {11}, {4}, {90}};
-	int	stack_temp[N];
-	int	stack_counter;
-	int	stop_while;
+	int			j;
+	int			stop_while;
+	t_stacks	stacks = {.stack_a = {{7}, {100}, {3}, {20}, {9}, {2}, {5}, {11}, {4}, {90}}};
 
-	stack_counter = N;
+	stacks.stack_a_counter = N;
+	stacks.stack_b_counter = 0;
+	stacks.stack_b_pointer = -1;
 	stop_while = 0;
-	copy_array(stack_temp, stack_input);
-	bubble_sort(stack_temp);
-	find_moves(stack_temp, stack_input);
-	copy_array(stack_temp, stack_input);
-	print(stack_temp, stack_input, &stack_counter);
-	while (stack_counter != stop_while)
+	init_array(&stacks);
+	bubble_sort(&stacks);
+	find_moves(&stacks);
+	print(&stacks);
+	while (stacks.stack_a_counter != 0)
 	{
-		stop_while = stack_counter;
 		j = 0;
-		while ( j < stack_counter)
+		if (stop_while == stacks.stack_a_counter)
 		{
-			swap(stack_input, j, &stack_counter);
-			if (stack_input[j][2] == 0)
+			if (stacks.stack_a[j][2] > 0)
+				rotate (&stacks, -1);
+			else
+				rotate (&stacks, 1);
+		}
+		stop_while = stacks.stack_a_counter;
+		while (j < stacks.stack_a_counter)
+		{
+			swap(&stacks, j);
+			if (stacks.stack_a[j][2] == 0)
 			{
-				stack_temp[stack_input[j][1]] = stack_input[j][0];
-				push(stack_input, j, &stack_counter);
-				print(stack_temp, stack_input, &stack_counter);
+				push_b(&stacks, j);
+				pull_a(&stacks, j);
+				print(&stacks);
 			}
-		j++;
+			j++;
+			if (stacks.stack_b[stacks.stack_b_pointer][1] < stacks.stack_a[j][1] &&
+				stacks.stack_b[stacks.stack_b_pointer][1] != -1)
+				stacks.stack_b_pointer++;
+			if (stacks.stack_b_pointer == stacks.stack_b_counter)
+				stacks.stack_b_pointer = 0;
 		}
 	}
 	return (0);
