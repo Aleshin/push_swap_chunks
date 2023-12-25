@@ -12,21 +12,6 @@
 
 #include "push_swap.h"
 
-int	init_array(t_stacks *stacks)
-{
-	int	i;
-
-	i = 0;
-	while (i < N)
-	{
-		stacks->stack_temp[i] = stacks->stack_a[i][0];
-		stacks->stack_b[i][1] = -1;
-		stacks->stack_b[i][0] = 0;
-		i++;
-	}
-	return (0);
-}
-
 int	bubble_sort(t_stacks *stacks)
 {
 	int	i;
@@ -92,49 +77,68 @@ int	print(t_stacks *stacks)
 		printf("%d,\t", stacks->stack_a[i++][2]);
 	printf("\n");
 	i = 0;
-	while (i < stacks->stack_b_counter)
+	while (i < 10) //stacks->stack_b_counter)
 		printf("%d,\t", stacks->stack_b[i++][0]);
 	printf("\n");
 	printf("\n");
 	return (0);
 }
 
+int	init(t_stacks *stacks)
+{
+	int	i;
+
+	i = 0;
+	stacks->stack_a_counter = N;
+	stacks->stack_b_counter = 0;
+	stacks->stack_b_pointer = -1;
+	while (i < N)
+	{
+		stacks->stack_temp[i] = stacks->stack_a[i][0];
+		stacks->stack_b[i][1] = -1;
+		stacks->stack_b[i][0] = 0;
+		i++;
+	}
+	bubble_sort(stacks);
+	find_moves(stacks);
+	print(stacks);
+	return (0);
+}
+
 int	main(void)
 {
-	int			j;
-	int			stop_while;
-	t_stacks	stacks = {.stack_a = {{7}, {100}, {3}, {20}, {9}, {2}, {5}, {11}, {4}, {90}}};
+	int			i;
+	int			time_2_move;
+	t_stacks	stacks = {.stack_a = {{7}, {100}, {3}, {20},
+	{9}, {2}, {5}, {11}, {4}, {90}}};
 
-	stacks.stack_a_counter = N;
-	stacks.stack_b_counter = 0;
-	stacks.stack_b_pointer = -1;
-	stop_while = 0;
-	init_array(&stacks);
-	bubble_sort(&stacks);
-	find_moves(&stacks);
-	print(&stacks);
+	time_2_move = 0;
+	init(&stacks);
 	while (stacks.stack_a_counter > 0)
 	{
-		j = 0;
-		if (stop_while == stacks.stack_a_counter)
+		i = 0;
+		if (time_2_move == 1)
 		{
-			if (stacks.stack_a[j][2] > 0)
+			if (stacks.stack_a[i][2] > 0)
 				rotate (&stacks, -1);
 			else
 				rotate (&stacks, 1);
 		}
-		stop_while = stacks.stack_a_counter;
-		while (j < stacks.stack_a_counter)
+		time_2_move = 1;
+		while (i < stacks.stack_a_counter)
 		{
-			swap(&stacks, j);
-			if (stacks.stack_a[j][2] == 0)
+			swap_a(&stacks, i);
+			if (stacks.stack_a[i][2] == 0)
 			{
-				push_b(&stacks, j);
-				pull_a(&stacks, j);
+//				push_b(&stacks, i);
+				stacks.stack_b[stacks.stack_a[i][1]][0] = stacks.stack_a[i][0];
+				pull_a(&stacks, i);
 				print(&stacks);
+				time_2_move = 0;
 			}
-			j++;
-			if (stacks.stack_b[stacks.stack_b_pointer][1] < stacks.stack_a[j][1] &&
+			i++;
+			if (stacks.stack_b[stacks.stack_b_pointer][1]
+				< stacks.stack_a[i][1] &&
 				stacks.stack_b[stacks.stack_b_pointer][1] != -1)
 				stacks.stack_b_pointer++;
 			if (stacks.stack_b_pointer == stacks.stack_b_counter)

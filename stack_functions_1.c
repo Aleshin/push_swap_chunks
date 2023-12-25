@@ -60,7 +60,7 @@ int	rotate(t_stacks *stacks, int direction)
 	return (0);
 }
 
-int	swap(t_stacks *stacks, int i)
+int	swap_a(t_stacks *stacks, int i)
 {
 	int	j;
 	int	swap;
@@ -77,8 +77,9 @@ int	swap(t_stacks *stacks, int i)
 		swap = stacks->stack_a[i][1];
 		stacks->stack_a[i][1] = stacks->stack_a[j][1];
 		stacks->stack_a[j][1] = swap;
-		stacks->stack_a[i][2]--;
-		stacks->stack_a[j][2]++;
+		swap = stacks->stack_a[i][2];
+		stacks->stack_a[i][2] = stacks->stack_a[j][2] + 1;
+		stacks->stack_a[j][2] = swap - 1;
 	}
 	return (0);
 }

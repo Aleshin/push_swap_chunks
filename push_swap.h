@@ -31,5 +31,5 @@ typedef struct s_stacks
 int	pull_a(t_stacks *stacks, int i);
 int	push_b(t_stacks *stacks, int j);
 int	rotate(t_stacks *stacks, int direction);
-int	swap(t_stacks *stacks, int i);
+int	swap_a(t_stacks *stacks, int i);
 #endif
