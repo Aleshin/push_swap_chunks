@@ -108,42 +108,27 @@ int	init(t_stacks *stacks)
 int	main(void)
 {
 	int			i;
-	int			time_2_move;
 	t_stacks	stacks = {.stack_a = {{7}, {100}, {3}, {20},
 	{9}, {2}, {5}, {11}, {4}, {90}}};
 
-	time_2_move = 0;
 	init(&stacks);
+	i = 0;
 	while (stacks.stack_a_counter > 0)
 	{
-		i = 0;
-		if (time_2_move == 1)
+		if (make_swaps(&stacks, i) && stacks.stack_a_counter > 0)
 		{
 			if (stacks.stack_a[i][2] > 0)
 				rotate (&stacks, -1);
 			else
 				rotate (&stacks, 1);
 		}
-		time_2_move = 1;
-		while (i < stacks.stack_a_counter)
-		{
-			swap_a(&stacks, i);
-			if (stacks.stack_a[i][2] == 0)
-			{
-//				push_b(&stacks, i);
-				stacks.stack_b[stacks.stack_a[i][1]][0] = stacks.stack_a[i][0];
-				pull_a(&stacks, i);
-				print(&stacks);
-				time_2_move = 0;
-			}
-			i++;
-			if (stacks.stack_b[stacks.stack_b_pointer][1]
-				< stacks.stack_a[i][1] &&
-				stacks.stack_b[stacks.stack_b_pointer][1] != -1)
-				stacks.stack_b_pointer++;
-			if (stacks.stack_b_pointer == stacks.stack_b_counter)
-				stacks.stack_b_pointer = 0;
-		}
+		if (stacks.stack_b[stacks.stack_b_pointer][1]
+			< stacks.stack_a[i][1] &&
+			stacks.stack_b[stacks.stack_b_pointer][1] != -1)
+			stacks.stack_b_pointer++;
+		if (stacks.stack_b_pointer == stacks.stack_b_counter)
+			stacks.stack_b_pointer = 0;
+		print(&stacks);
 	}
 	return (0);
 }

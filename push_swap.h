@@ -32,4 +32,9 @@ int	pull_a(t_stacks *stacks, int i);
 int	push_b(t_stacks *stacks, int j);
 int	rotate(t_stacks *stacks, int direction);
 int	swap_a(t_stacks *stacks, int i);
+int	init(t_stacks *stacks);
+int	print(t_stacks *stacks);
+int	bubble_sort(t_stacks *stacks);
+int	find_moves(t_stacks *stacks);
+int	make_swaps(t_stacks *stacks, int i);
 #endif
