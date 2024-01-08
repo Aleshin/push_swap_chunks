@@ -19,13 +19,13 @@
 
 typedef struct s_stacks
 {
-	int	stack_a[N][3];
-	int	stack_temp[N];
-	int	stack_b[N][2];
 	int	stack_a_counter;
 	int	stack_b_counter;
 	int	stack_a_pointer;
 	int	stack_b_pointer;
+	int	stack_a[N][3];
+	int	stack_temp[N];
+	int	stack_b[N][2];
 }	t_stacks;
 
 int	pull_a(t_stacks *stacks, int i);
@@ -36,5 +36,5 @@ int	init(t_stacks *stacks);
 int	print(t_stacks *stacks);
 int	bubble_sort(t_stacks *stacks);
 int	find_moves(t_stacks *stacks);
-int	make_swaps(t_stacks *stacks, int i);
+int	make_swaps(t_stacks *stacks);
 #endif

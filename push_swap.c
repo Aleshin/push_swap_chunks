@@ -77,10 +77,9 @@ int	print(t_stacks *stacks)
 		printf("%d,\t", stacks->stack_a[i++][2]);
 	printf("\n");
 	i = 0;
-	while (i < 10) //stacks->stack_b_counter)
+	while (i < stacks->stack_b_counter)
 		printf("%d,\t", stacks->stack_b[i++][0]);
-	printf("\n");
-	printf("\n");
+	printf("\n\n");
 	return (0);
 }
 
@@ -90,6 +89,7 @@ int	init(t_stacks *stacks)
 
 	i = 0;
 	stacks->stack_a_counter = N;
+	stacks->stack_a_pointer = 0;
 	stacks->stack_b_counter = 0;
 	stacks->stack_b_pointer = -1;
 	while (i < N)
@@ -107,27 +107,26 @@ int	init(t_stacks *stacks)
 
 int	main(void)
 {
-	int			i;
 	t_stacks	stacks = {.stack_a = {{7}, {100}, {3}, {20},
 	{9}, {2}, {5}, {11}, {4}, {90}}};
 
 	init(&stacks);
-	i = 0;
 	while (stacks.stack_a_counter > 0)
 	{
-		if (make_swaps(&stacks, i) && stacks.stack_a_counter > 0)
+		if (make_swaps(&stacks) && stacks.stack_a_counter > 0)
 		{
-			if (stacks.stack_a[i][2] > 0)
+			if (stacks.stack_a[0][2] > 0)
 				rotate (&stacks, -1);
 			else
 				rotate (&stacks, 1);
 		}
-		if (stacks.stack_b[stacks.stack_b_pointer][1]
+/*		if (stacks.stack_b[stacks.stack_b_pointer][1]
 			< stacks.stack_a[i][1] &&
 			stacks.stack_b[stacks.stack_b_pointer][1] != -1)
 			stacks.stack_b_pointer++;
 		if (stacks.stack_b_pointer == stacks.stack_b_counter)
 			stacks.stack_b_pointer = 0;
+*/
 		print(&stacks);
 	}
 	return (0);
