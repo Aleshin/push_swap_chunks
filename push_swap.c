@@ -112,10 +112,22 @@ int	init(t_stacks *stacks)
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
+	int	i;
 	t_stacks	stacks = {.stack_a = {{7}, {100}, {3}, {20},
 	{9}, {2}, {5}, {11}, {4}, {90}}};
+
+	i = 1;
+	if (argc > 1)
+		while (i < argc)
+		{
+			if (ft_atoi(argv[i], &stacks))
+				return (write(1,"error\n",6));
+			i++;
+		}
+	else
+		return (0);
 
 	init(&stacks);
 	while (stacks.stack_a_counter > 0)
@@ -127,13 +139,6 @@ int	main(void)
 			else
 				rotate_a (&stacks, 1);
 		}
-/*		if (stacks.stack_b[stacks.stack_b_pointer][1]
-			< stacks.stack_a[i][1] &&
-			stacks.stack_b[stacks.stack_b_pointer][1] != -1)
-			stacks.stack_b_pointer++;
-		if (stacks.stack_b_pointer == stacks.stack_b_counter)
-			stacks.stack_b_pointer = 0;
-*/
 		print(&stacks);
 	}
 	return (0);

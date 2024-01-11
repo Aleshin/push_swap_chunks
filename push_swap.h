@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 # define N 10
 
 typedef struct s_stacks
@@ -28,6 +29,7 @@ typedef struct s_stacks
 	int	stack_b[N][2];
 }	t_stacks;
 
+int	ft_atoi(const char *str, t_stacks *stacks);
 int	pull_a(t_stacks *stacks, int i);
 int	push_b(t_stacks *stacks, int j);
 int	rotate_a(t_stacks *stacks, int direction);
