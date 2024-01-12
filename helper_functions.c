@@ -11,6 +11,24 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
+int	make_array(t_stacks *stacks, int i, int j)
+{
+	int	*ptr;
+	int	n;
+
+	n = 0;
+	stacks->stack_a = malloc(i * sizeof(int*) + i * j * sizeof(int));
+	if (!stacks->stack_a)
+		return (0);
+	ptr = (int*)(stacks->stack_a + i);
+	while (n < i)
+	{
+		stacks->stack_a[n] = ptr + j * n;
+		n++;
+	}
+	return (1);
+}
+
 int	ft_atoi(const char *str, t_stacks *stacks)
 {
 	int	i;
@@ -33,8 +51,7 @@ int	ft_atoi(const char *str, t_stacks *stacks)
 		digits = digits + str[i] - '0';
 		i++;
 	}
-	(stacks->stack_a_counter)++;
 	(stacks->stack_a_pointer)++;
-	stacks->stack_a[stacks->stack_a_pointer][0] = sign * digits;
+	stacks->stack_a[0][stacks->stack_a_pointer] = sign * digits;
 	return (0);
 }

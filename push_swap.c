@@ -41,20 +41,22 @@ int	find_moves(t_stacks *stacks)
 {
 	int	i;
 	int	j;
+	int	n;
 
 	i = 0;
-	while (i < N)
+	n = stacks->stack_a_counter;
+	while (i < n)
 	{
 		j = 0;
-		while (stacks->stack_a[i][0] != stacks->stack_temp[j])
+		while (stacks->stack_a[0][i] != stacks->stack_temp[j])
 			j++;
-		stacks->stack_a[i][1] = j;
-		if ((i <= j && j - i < N / 2) || (i >= j && i - j < N / 2))
-			stacks->stack_a[i][2] = j - i;
+		stacks->stack_a[1][i] = j;
+		if ((i <= j && i - j < n / 2) || (j >= i && j - i < n / 2))
+			stacks->stack_a[2][i] = i - j;
 		else if (i < j)
-			stacks->stack_a[i][2] = -i - N + j;
+			stacks->stack_a[2][i] = -j - n + i;
 		else
-			stacks->stack_a[i][2] = N - i + j;
+			stacks->stack_a[2][i] = n - j + i;
 		i++;
 	}
 	return (0);
@@ -66,15 +68,15 @@ int	print(t_stacks *stacks)
 
 	i = 0;
 	while (i < stacks->stack_a_counter)
-		printf("%d,\t", stacks->stack_a[i++][0]);
+		printf("%d,\t", stacks->stack_a[0][i++]);
 	printf("\n");
 	i = 0;
 	while (i < stacks->stack_a_counter)
-		printf("%d,\t", stacks->stack_a[i++][1] + 1);
+		printf("%d,\t", stacks->stack_a[1][i++] + 1);
 	printf("\n");
 	i = 0;
 	while (i < stacks->stack_a_counter)
-		printf("%d,\t", stacks->stack_a[i++][2]);
+		printf("%d,\t", stacks->stack_a[2][i++]);
 	printf("\n");
 	i = 0;
 	while (i < N) //stacks->stack_b_counter)
@@ -95,13 +97,13 @@ int	init(t_stacks *stacks)
 	int	i;
 
 	i = 0;
-	stacks->stack_a_counter = N;
+//	stacks->stack_a_counter = N;
 	stacks->stack_a_pointer = 0;
 	stacks->stack_b_counter = 0;
 	stacks->stack_b_pointer = -1;
-	while (i < N)
+	while (i < stacks->stack_a_counter)
 	{
-		stacks->stack_temp[i] = stacks->stack_a[i][0];
+		stacks->stack_temp[i] = stacks->stack_a[0][i];
 		stacks->stack_b[i][1] = -1;
 		stacks->stack_b[i][0] = 0;
 		i++;
@@ -115,26 +117,32 @@ int	init(t_stacks *stacks)
 int	main(int argc, char **argv)
 {
 	int	i;
-	t_stacks	stacks = {.stack_a = {{7}, {100}, {3}, {20},
-	{9}, {2}, {5}, {11}, {4}, {90}}};
+	t_stacks	stacks; // = {.stack_a = {{7}, {100}, {3}, {20},
+//	{9}, {2}, {5}, {11}, {4}, {90}}};
 
 	i = 1;
 	if (argc > 1)
+	{
+		if (!make_array(&stacks, 3, argc - 1))
+				return (write(1,"error\n",6));
+		stacks.stack_a_counter = argc - 1;
+		stacks.stack_a_pointer = 0;
 		while (i < argc)
 		{
 			if (ft_atoi(argv[i], &stacks))
 				return (write(1,"error\n",6));
+			printf("%d\n", stacks.stack_a[0][i]);
 			i++;
 		}
+	}
 	else
 		return (0);
-
 	init(&stacks);
 	while (stacks.stack_a_counter > 0)
 	{
 		if (swaps_pushes(&stacks) && stacks.stack_a_counter > 0)
 		{
-			if (stacks.stack_a[0][2] > 0)
+			if (stacks.stack_a[2][0] > 0)
 				rotate_a (&stacks, -1);
 			else
 				rotate_a (&stacks, 1);

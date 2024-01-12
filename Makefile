@@ -5,7 +5,7 @@ RM = rm -f
 NAME = push_swap
 HEADER = push_swap.h
 
-SRCS =	push_swap.c stack_functions_1.c ft_atoi.c
+SRCS =	push_swap.c stack_functions_1.c helper_functions.c
 
 OBJS = $(SRCS:.c=.o)
 
