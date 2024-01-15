@@ -16,13 +16,13 @@ int	pull_a(t_stacks *stacks, int i)
 {
 	while (i < stacks->stack_a_counter - 1)
 	{
-		stacks->stack_a[i][0] = stacks->stack_a[i + 1][0];
-		stacks->stack_a[i][1] = stacks->stack_a[i + 1][1];
-		stacks->stack_a[i][2] = stacks->stack_a[i + 1][2];
-		if (stacks->stack_a[i][2] > 0)
-			stacks->stack_a[i][2]--;
-		if (stacks->stack_a[i][2] < 0)
-			stacks->stack_a[i][2]++;
+		stacks->stack_a[0][i] = stacks->stack_a[0][i + 1];
+		stacks->stack_a[1][i] = stacks->stack_a[1][i + 1];
+		stacks->stack_a[2][i] = stacks->stack_a[2][i + 1];
+		if (stacks->stack_a[2][i] > 0)
+			stacks->stack_a[2][i]--;
+		if (stacks->stack_a[2][i] < 0)
+			stacks->stack_a[2][i]++;
 		i++;
 	}
 	(stacks->stack_a_counter)--;
@@ -53,8 +53,8 @@ int	push_b(t_stacks *stacks, int j)
 	stacks->stack_b[i][0] = stacks->stack_a[j][0];
 	stacks->stack_b[i][1] = stacks->stack_a[j][1];
 */
-	stacks->stack_b[stacks->stack_a[j][1]][0] = stacks->stack_a[j][0];
-	stacks->stack_b[stacks->stack_a[j][1]][1] = stacks->stack_a[j][1];
+	stacks->stack_b[stacks->stack_a[1][j]][0] = stacks->stack_a[0][j];
+	stacks->stack_b[stacks->stack_a[1][j]][1] = stacks->stack_a[1][j];
 	return (0);
 }
 
@@ -65,7 +65,7 @@ int	rotate_a(t_stacks *stacks, int direction)
 	i = 0;
 	while (i < stacks->stack_a_counter)
 	{
-		stacks->stack_a[i][2] = stacks->stack_a[i][2] + direction;
+		stacks->stack_a[2][i] = stacks->stack_a[2][i] + direction;
 		i++;
 	}
 	stacks->stack_a_pointer	= (stacks->stack_a_pointer + direction) % stacks->stack_a_counter;
@@ -93,13 +93,13 @@ int	swaps_pushes(t_stacks *stacks)
 	n = stacks->stack_a_counter;
 	while (j < n)
 	{
-		if (stacks->stack_a[j % n][2] > 0
-		&& stacks->stack_a[(j + 1) % n][2] < 0)
+		if (stacks->stack_a[2][j % n] > 0
+		&& stacks->stack_a[2][(j + 1) % n] < 0)
 		{
 			swap_a(stacks, j % n);
 			res = 0;
 		}
-		if (stacks->stack_a[j % n][2] == 0)
+		if (stacks->stack_a[2][j % n] == 0)
 		{
 			push_b(stacks, j);
 //			stacks->stack_b[stacks->stack_a[i][1]][0] = stacks->stack_a[i][0];
@@ -118,15 +118,15 @@ int	swap_a(t_stacks *stacks, int i)
 	int	swap;
 
 	j = (i + 1) % stacks->stack_a_counter;
-	swap = stacks->stack_a[i][0];
-	stacks->stack_a[i][0] = stacks->stack_a[j][0];
-	stacks->stack_a[j][0] = swap;
-	swap = stacks->stack_a[i][1];
-	stacks->stack_a[i][1] = stacks->stack_a[j][1];
-	stacks->stack_a[j][1] = swap;
-	swap = stacks->stack_a[i][2];
-	stacks->stack_a[i][2] = stacks->stack_a[j][2] + 1;
-	stacks->stack_a[j][2] = swap - 1;
+	swap = stacks->stack_a[0][i];
+	stacks->stack_a[0][i] = stacks->stack_a[0][j];
+	stacks->stack_a[0][j] = swap;
+	swap = stacks->stack_a[1][i];
+	stacks->stack_a[1][i] = stacks->stack_a[1][j];
+	stacks->stack_a[1][j] = swap;
+	swap = stacks->stack_a[2][i];
+	stacks->stack_a[2][i] = stacks->stack_a[2][j] + 1;
+	stacks->stack_a[2][j] = swap - 1;
 	return (0);
 }
 

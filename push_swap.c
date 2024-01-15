@@ -19,10 +19,10 @@ int	bubble_sort(t_stacks *stacks)
 	int	swap;
 
 	i = 0;
-	while (i < N)
+	while (i < stacks->stack_a_counter)
 	{
 		j = 0;
-		while (j < N - 1)
+		while (j < stacks->stack_a_counter - 1)
 		{
 			if (stacks->stack_temp[j] > stacks->stack_temp[j + 1])
 			{
@@ -51,12 +51,12 @@ int	find_moves(t_stacks *stacks)
 		while (stacks->stack_a[0][i] != stacks->stack_temp[j])
 			j++;
 		stacks->stack_a[1][i] = j;
-		if ((i <= j && i - j < n / 2) || (j >= i && j - i < n / 2))
-			stacks->stack_a[2][i] = i - j;
+		if ((i <= j && j - i <= n / 2) || (i >= j && i - j <= n / 2))
+			stacks->stack_a[2][i] = j - i;
 		else if (i < j)
-			stacks->stack_a[2][i] = -j - n + i;
+			stacks->stack_a[2][i] = -i - n + j;
 		else
-			stacks->stack_a[2][i] = n - j + i;
+			stacks->stack_a[2][i] = n - i + j;
 		i++;
 	}
 	return (0);
@@ -79,15 +79,15 @@ int	print(t_stacks *stacks)
 		printf("%d,\t", stacks->stack_a[2][i++]);
 	printf("\n");
 	i = 0;
-	while (i < N) //stacks->stack_b_counter)
+	while (i < stacks->stack_b_counter)
 		if (stacks->stack_b[i++][1] == -1)
 			printf("\t");
 			else
 				printf("%d,\t", stacks->stack_b[i-1][0]);
 	printf("\n");
 	i = 0;
-	while (i < N)
-		printf("%d,\t", stacks->stack_b[i++][1]);
+	while (i < stacks->stack_b_counter)
+		printf("%d,\t", stacks->stack_b[i++][1] + 1);
 	printf("\n\n");
 	return (0);
 }
@@ -97,9 +97,8 @@ int	init(t_stacks *stacks)
 	int	i;
 
 	i = 0;
-//	stacks->stack_a_counter = N;
 	stacks->stack_a_pointer = 0;
-	stacks->stack_b_counter = 0;
+	stacks->stack_b_counter = stacks->stack_a_counter;
 	stacks->stack_b_pointer = -1;
 	while (i < stacks->stack_a_counter)
 	{
@@ -116,22 +115,21 @@ int	init(t_stacks *stacks)
 
 int	main(int argc, char **argv)
 {
-	int	i;
-	t_stacks	stacks; // = {.stack_a = {{7}, {100}, {3}, {20},
-//	{9}, {2}, {5}, {11}, {4}, {90}}};
-
+	int			i;
+	t_stacks	stacks;
+	
 	i = 1;
 	if (argc > 1)
 	{
 		if (!make_array(&stacks, 3, argc - 1))
 				return (write(1,"error\n",6));
 		stacks.stack_a_counter = argc - 1;
-		stacks.stack_a_pointer = 0;
+		stacks.stack_a_pointer = -1;
 		while (i < argc)
 		{
 			if (ft_atoi(argv[i], &stacks))
 				return (write(1,"error\n",6));
-			printf("%d\n", stacks.stack_a[0][i]);
+//			printf("%d\n", stacks.stack_a[0][i]);
 			i++;
 		}
 	}
