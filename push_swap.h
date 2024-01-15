@@ -24,13 +24,11 @@ typedef struct s_stacks
 	int	stack_b_counter;
 	int	stack_a_pointer;
 	int	stack_b_pointer;
-	int	**temp;
-	int	**stack_a; //[N][3];
-	int	stack_temp[N];
-	int	stack_b[N][2];
+	int	**stack_a;
+	int	**stack_b;
 }	t_stacks;
 
-int	make_array(t_stacks *stacks, int i, int j);
+int	make_array(int ***array, int i, int j);
 int	ft_atoi(const char *str, t_stacks *stacks);
 int	pull_a(t_stacks *stacks, int i);
 int	push_b(t_stacks *stacks, int j);

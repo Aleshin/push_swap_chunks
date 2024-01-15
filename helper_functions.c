@@ -11,19 +11,19 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-int	make_array(t_stacks *stacks, int i, int j)
+int	make_array(int ***array, int i, int j)
 {
 	int	*ptr;
 	int	n;
 
 	n = 0;
-	stacks->stack_a = malloc(i * sizeof(int*) + i * j * sizeof(int));
-	if (!stacks->stack_a)
+	*array = malloc (i * sizeof(int *) + i * j * sizeof(int));
+	if (!*array)
 		return (0);
-	ptr = (int*)(stacks->stack_a + i);
+	ptr = (int *)(*array + i);
 	while (n < i)
 	{
-		stacks->stack_a[n] = ptr + j * n;
+		(*array)[n] = ptr + j * n;
 		n++;
 	}
 	return (1);

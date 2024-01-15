@@ -53,8 +53,8 @@ int	push_b(t_stacks *stacks, int j)
 	stacks->stack_b[i][0] = stacks->stack_a[j][0];
 	stacks->stack_b[i][1] = stacks->stack_a[j][1];
 */
-	stacks->stack_b[stacks->stack_a[1][j]][0] = stacks->stack_a[0][j];
-	stacks->stack_b[stacks->stack_a[1][j]][1] = stacks->stack_a[1][j];
+	stacks->stack_b[0][stacks->stack_a[1][j]] = stacks->stack_a[0][j];
+	stacks->stack_b[1][stacks->stack_a[1][j]] = stacks->stack_a[1][j];
 	return (0);
 }
 
@@ -68,7 +68,8 @@ int	rotate_a(t_stacks *stacks, int direction)
 		stacks->stack_a[2][i] = stacks->stack_a[2][i] + direction;
 		i++;
 	}
-	stacks->stack_a_pointer	= (stacks->stack_a_pointer + direction) % stacks->stack_a_counter;
+	stacks->stack_a_pointer = (stacks->stack_a_pointer + direction)
+		% stacks->stack_a_counter;
 	if (stacks->stack_a_pointer < 0)
 		stacks->stack_a_pointer = stacks->stack_a_counter;
 	return (0);
@@ -76,7 +77,8 @@ int	rotate_a(t_stacks *stacks, int direction)
 
 int	rotate_b(t_stacks *stacks, int direction)
 {
-	stacks->stack_b_pointer	= (stacks->stack_b_pointer + direction) % stacks->stack_b_counter;
+	stacks->stack_b_pointer = (stacks->stack_b_pointer + direction)
+		% stacks->stack_b_counter;
 	if (stacks->stack_b_pointer < 0)
 		stacks->stack_b_pointer = stacks->stack_b_counter - 1;
 	return (0);
@@ -102,7 +104,6 @@ int	swaps_pushes(t_stacks *stacks)
 		if (stacks->stack_a[2][j % n] == 0)
 		{
 			push_b(stacks, j);
-//			stacks->stack_b[stacks->stack_a[i][1]][0] = stacks->stack_a[i][0];
 			pull_a(stacks, j % n);
 			n = stacks->stack_a_counter;
 		}
@@ -136,11 +137,11 @@ int	swap_b(t_stacks *stacks, int i)
 	int	swap;
 
 	j = (i + 1) % stacks->stack_b_counter;
-	swap = stacks->stack_b[i][0];
-	stacks->stack_b[i][0] = stacks->stack_b[j][0];
-	stacks->stack_b[j][0] = swap;
-	swap = stacks->stack_b[i][1];
-	stacks->stack_b[i][1] = stacks->stack_b[j][1];
-	stacks->stack_b[j][1] = swap;
+	swap = stacks->stack_b[0][i];
+	stacks->stack_b[0][i] = stacks->stack_b[0][j];
+	stacks->stack_b[0][j] = swap;
+	swap = stacks->stack_b[1][i];
+	stacks->stack_b[1][i] = stacks->stack_b[1][j];
+	stacks->stack_b[1][j] = swap;
 	return (0);
 }
