@@ -29,6 +29,26 @@ int	make_array(int ***array, int i, int j)
 	return (1);
 }
 
+int	input_data(t_stacks *stacks, int argc, char **argv)
+{
+	int	i;
+
+	i = 1;
+	(void) argv;
+	if (!make_array(&stacks->stack_a, 3, argc - 1)
+		|| !make_array(&stacks->stack_b, 2, argc - 1))
+		return (1);
+	stacks->stack_a_counter = argc - 1;
+	stacks->stack_a_pointer = -1;
+	while (i < argc)
+	{
+		if (ft_atoi(argv[i], stacks))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_atoi(const char *str, t_stacks *stacks)
 {
 	int	i;

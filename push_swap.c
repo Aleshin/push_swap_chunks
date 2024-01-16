@@ -120,17 +120,8 @@ int	main(int argc, char **argv)
 	i = 1;
 	if (argc > 1)
 	{
-		if (!make_array(&stacks.stack_a, 3, argc - 1)
-			|| !make_array(&stacks.stack_b, 2, argc - 1))
+		if (input_data(&stacks, argc, argv))
 			return (write(1, "error\n", 6));
-		stacks.stack_a_counter = argc - 1;
-		stacks.stack_a_pointer = -1;
-		while (i < argc)
-		{
-			if (ft_atoi(argv[i], &stacks))
-				return (write(1, "error\n", 6));
-			i++;
-		}
 	}
 	else
 		return (0);
