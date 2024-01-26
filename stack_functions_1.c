@@ -62,11 +62,13 @@ int	swaps_pushes(t_stacks *stacks)
 {
 	int	j;
 	int	n;
+	int	m;
 	int	res;
 
 	j = 0;
 	res = 1;
 	n = stacks->stack_a_counter;
+	m = stacks->stack_b_counter;
 	while (j < n)
 	{
 		if (stacks->stack_a[2][j % n] > 0
@@ -78,6 +80,16 @@ int	swaps_pushes(t_stacks *stacks)
 		if (stacks->stack_a[2][j % n] == 0)
 		{
 			push_b(stacks, j);
+			printf("pointer = %d, place = %d, move = %d\n",
+				stacks->stack_b_pointer,
+				stacks->stack_a[1][j % n],
+				find_real_moves_b(stacks, j));
+			stacks->stack_b_pointer += find_real_moves_b(stacks, j);
+			if (stacks->stack_b_pointer < 0)
+				stacks->stack_b_pointer += m;
+			else if (stacks->stack_b_pointer > m - 1)
+				stacks->stack_b_pointer -= m;
+//			stacks->b_counter++;
 			pull_a(stacks, j % n);
 			n = stacks->stack_a_counter;
 		}

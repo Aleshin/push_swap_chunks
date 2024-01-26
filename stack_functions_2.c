@@ -12,6 +12,26 @@
 
 #include "push_swap.h"
 
+int	three_n(t_stacks *stacks)
+{
+	if (stacks->stack_a[0][0] < stacks->stack_a[0][1])
+	{
+		if (stacks->stack_a[0][1] < stacks->stack_a[0][2])
+			return (0);
+		else if (stacks->stack_a[0][0] < stacks->stack_a[0][2])
+			write(1, "rra\nsa\n", 7);
+			else
+				write (1, "rra\n", 4);
+	}
+	else if (stacks->stack_a[0][0] < stacks->stack_a[0][2])
+		write(1, "sa\n", 3);
+		else if (stacks->stack_a[0][1] < stacks->stack_a[0][2])
+			write(1, "ra\n", 3);
+			else
+				write(1, "ra\nsa\n", 6);
+	return (0);
+}
+
 int	rotate_a(t_stacks *stacks, int direction)
 {
 	int	i;

@@ -99,7 +99,8 @@ int	init(t_stacks *stacks)
 	i = 0;
 	stacks->stack_a_pointer = 0;
 	stacks->stack_b_counter = stacks->stack_a_counter;
-	stacks->stack_b_pointer = -1;
+	stacks->stack_b_pointer = 0;
+	stacks->b_counter = stacks->stack_a_counter;
 	while (i < stacks->stack_a_counter)
 	{
 		stacks->stack_b[1][i] = -1;
@@ -108,7 +109,7 @@ int	init(t_stacks *stacks)
 	}
 	bubble_sort(stacks);
 	find_moves(stacks);
-	print(stacks);
+//	print(stacks);
 	return (0);
 }
 
@@ -118,6 +119,7 @@ int	main(int argc, char **argv)
 	t_stacks	stacks;
 
 	i = 1;
+//	printf("аргумент %d\n", argc);
 	if (argc > 1)
 	{
 		if (input_data(&stacks, argc, argv))
@@ -125,7 +127,7 @@ int	main(int argc, char **argv)
 	}
 	else
 		return (0);
-	init(&stacks);
+/*
 	while (stacks.stack_a_counter > 0)
 	{
 		if (swaps_pushes(&stacks) && stacks.stack_a_counter > 0)
@@ -135,7 +137,9 @@ int	main(int argc, char **argv)
 			else
 				rotate_a (&stacks, 1);
 		}
-		print(&stacks);
+//		print(&stacks);
 	}
+*/
+	three_n(&stacks);
 	return (0);
 }
