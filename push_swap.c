@@ -30,6 +30,8 @@ int	bubble_sort(t_stacks *stacks)
 				stacks->stack_b[0][j] = stacks->stack_b[0][j + 1];
 				stacks->stack_b[0][j + 1] = swap;
 			}
+			if (stacks->stack_b[0][j] == stacks->stack_b[0][j + 1])
+				return (1);
 			j++;
 		}
 		i++;
@@ -107,9 +109,10 @@ int	init(t_stacks *stacks)
 		stacks->stack_b[0][i] = stacks->stack_a[0][i];
 		i++;
 	}
-	bubble_sort(stacks);
+	if (bubble_sort(stacks))
+		return (1);
 	find_moves(stacks);
-//	print(stacks);
+	print(stacks);
 	return (0);
 }
 
@@ -123,7 +126,7 @@ int	main(int argc, char **argv)
 	if (argc > 1)
 	{
 		if (input_data(&stacks, argc, argv))
-			return (write(1, "error\n", 6));
+			return (write(1, "Error\n", 6));
 	}
 	else
 		return (0);
