@@ -24,7 +24,7 @@ int	bubble_sort(t_stacks *stacks)
 		j = 0;
 		while (j < stacks->stack_a_counter - 1)
 		{
-			if (stacks->stack_b[0][j] > stacks->stack_b[0][j + 1])
+			if (stacks->stack_b[0][j] < stacks->stack_b[0][j + 1])
 			{
 				swap = stacks->stack_b[0][j];
 				stacks->stack_b[0][j] = stacks->stack_b[0][j + 1];
@@ -74,7 +74,7 @@ int	print(t_stacks *stacks)
 	printf("\n");
 	i = 0;
 	while (i < stacks->stack_a_counter)
-		printf("%d,\t", stacks->stack_a[1][i++] + 1);
+		printf("%d,\t", stacks->stack_a[1][i++]);
 	printf("\n");
 	i = 0;
 	while (i < stacks->stack_a_counter)
@@ -89,7 +89,7 @@ int	print(t_stacks *stacks)
 	printf("\n");
 	i = 0;
 	while (i < stacks->stack_b_counter)
-		printf("%d,\t", stacks->stack_b[1][i++] + 1);
+		printf("%d,\t", stacks->stack_b[1][i++]);
 	printf("\n\n");
 	return (0);
 }
@@ -100,7 +100,7 @@ int	init(t_stacks *stacks)
 
 	i = 0;
 	stacks->stack_a_pointer = 0;
-	stacks->stack_b_counter = stacks->stack_a_counter;
+	stacks->stack_b_counter = 0; //stacks->stack_a_counter;
 	stacks->stack_b_pointer = 0;
 	stacks->b_counter = stacks->stack_a_counter;
 	while (i < stacks->stack_a_counter)
@@ -122,7 +122,6 @@ int	main(int argc, char **argv)
 	t_stacks	stacks;
 
 	i = 1;
-//	printf("аргумент %d\n", argc);
 	if (argc > 1)
 	{
 		if (input_data(&stacks, argc, argv))
@@ -130,7 +129,6 @@ int	main(int argc, char **argv)
 	}
 	else
 		return (0);
-/*
 	while (stacks.stack_a_counter > 0)
 	{
 		if (swaps_pushes(&stacks) && stacks.stack_a_counter > 0)
@@ -142,7 +140,5 @@ int	main(int argc, char **argv)
 		}
 //		print(&stacks);
 	}
-*/
-	three_n(&stacks);
 	return (0);
 }

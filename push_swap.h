@@ -30,6 +30,7 @@ typedef struct s_stacks
 }	t_stacks;
 
 int	make_array(int ***array, int i, int j);
+int	create_arrays(t_stacks *stacks, int j);
 int	input_data(t_stacks *stacks, int argc, char **argv);
 int	ft_atoi(const char *str, t_stacks *stacks);
 int	pull_a(t_stacks *stacks, int i);
