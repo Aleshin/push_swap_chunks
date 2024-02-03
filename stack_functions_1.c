@@ -35,6 +35,7 @@ int	push_b(t_stacks *stacks, int j)
 
 	stacks->stack_b_counter++;
 	i = stacks->stack_b_counter;
+	printf("B_counter = %d\n", i);
 	while (i > stacks->stack_b_pointer)
 	{
 		stacks->stack_b[0][i] = stacks->stack_b[0][i - 1];
@@ -43,6 +44,7 @@ int	push_b(t_stacks *stacks, int j)
 	}
 	stacks->stack_b[0][i] = stacks->stack_a[0][j];
 	stacks->stack_b[1][i] = stacks->stack_a[1][j];
+	printf("stack_b[%d] = %d\n", i, stacks->stack_b[0][i]);
 /*
 	int	i;
 
