@@ -34,8 +34,7 @@ int	push_b(t_stacks *stacks, int j)
 	int	i;
 
 	stacks->stack_b_counter++;
-	i = stacks->stack_b_counter;
-	printf("B_counter = %d\n", i);
+	i = stacks->stack_b_counter - 1;
 	while (i > stacks->stack_b_pointer)
 	{
 		stacks->stack_b[0][i] = stacks->stack_b[0][i - 1];
@@ -44,7 +43,6 @@ int	push_b(t_stacks *stacks, int j)
 	}
 	stacks->stack_b[0][i] = stacks->stack_a[0][j];
 	stacks->stack_b[1][i] = stacks->stack_a[1][j];
-	printf("stack_b[%d] = %d\n", i, stacks->stack_b[0][i]);
 /*
 	int	i;
 
@@ -95,7 +93,8 @@ int	swaps_pushes(t_stacks *stacks)
 		}
 		if (stacks->stack_a[2][j] == 0)
 		{
-			push_b(stacks, j);
+			find_position_b(stacks, j);
+//			push_b(stacks, j);
 /*
 			stacks->stack_b_pointer += find_real_moves_b(stacks, j);
 			if (stacks->stack_b_pointer < 0)
@@ -137,6 +136,8 @@ int	swap_b(t_stacks *stacks, int i)
 	int	j;
 	int	swap;
 
+	if (stacks->stack_b_counter < 2)
+		return (0);
 	j = (i + 1) % stacks->stack_b_counter;
 	swap = stacks->stack_b[0][i];
 	stacks->stack_b[0][i] = stacks->stack_b[0][j];

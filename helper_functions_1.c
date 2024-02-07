@@ -11,6 +11,38 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
+int	find_position_b(t_stacks *stacks, int a_pointer)
+{
+	int	i;
+	int	m;
+
+	i = 0;
+	m = 0;
+	while (i < stacks->stack_b_counter)
+	{
+		if (stacks->stack_a[1][a_pointer] > stacks->stack_b[1][i])
+		{
+			if (i + 1 < stacks->stack_b_counter)
+				m = i + 1;
+			else
+				m = -1;
+		}
+		i++;
+	}
+	if (m == -1)
+	{
+		stacks->stack_b_pointer = stacks->stack_b_counter - 1;
+		push_b(stacks, a_pointer);
+		swap_b(stacks, stacks->stack_b_pointer);
+	}
+	else
+	{
+		stacks->stack_b_pointer = m;
+		push_b(stacks, a_pointer);
+	}
+	return (m);
+}
+
 int	find_moves_b(t_stacks *stacks, int a_pointer)
 {
 	int	i;

@@ -81,14 +81,14 @@ int	print(t_stacks *stacks)
 		printf("%d,\t", stacks->stack_a[2][i++]);
 	printf("\n");
 	i = 0;
-	while (i <= stacks->stack_b_counter)
+	while (i < stacks->stack_b_counter)
 		if (stacks->stack_b[1][i++] == -1)
 			printf("\t");
 	else
 		printf("%d,\t", stacks->stack_b[0][i - 1]);
 	printf("\n");
 	i = 0;
-	while (i <= stacks->stack_b_counter)
+	while (i < stacks->stack_b_counter)
 		printf("%d,\t", stacks->stack_b[1][i++]);
 	printf("\n\n");
 	return (0);
@@ -100,7 +100,7 @@ int	init(t_stacks *stacks)
 
 	i = 0;
 	stacks->stack_a_pointer = 0;
-	stacks->stack_b_counter = -1; //stacks->stack_a_counter;
+	stacks->stack_b_counter = 0; //stacks->stack_a_counter;
 	stacks->stack_b_pointer = 0;
 	stacks->b_counter = stacks->stack_a_counter;
 	while (i < stacks->stack_a_counter)
@@ -119,6 +119,7 @@ int	init(t_stacks *stacks)
 int	main(int argc, char **argv)
 {
 	int			i;
+//	int			j;
 	t_stacks	stacks;
 
 	i = 1;
@@ -129,7 +130,22 @@ int	main(int argc, char **argv)
 	}
 	else
 		return (0);
-	printf("argc = %d\n", argc);
+/*
+	i = 0;
+	while (i < stacks.stack_a_counter)
+	{
+		printf("A[%d] = %d, B = ", i, stacks.stack_a[0][i]);
+		find_position_b(&stacks, i);
+		j = 0;
+		while (j < stacks.stack_b_counter)
+		{
+			printf("%d, ", stacks.stack_b[0][j]);
+			j++;
+		}
+		i++;
+		printf("\n");
+	}
+*/
 	while (stacks.stack_a_counter > 0)
 	{
 		if (swaps_pushes(&stacks) && stacks.stack_a_counter > 0)

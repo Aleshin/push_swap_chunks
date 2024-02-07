@@ -42,6 +42,7 @@ int	swap_b(t_stacks *stacks, int i);
 int	init(t_stacks *stacks);
 int	print(t_stacks *stacks);
 int	bubble_sort(t_stacks *stacks);
+int	find_position_b(t_stacks *stacks, int a_pointer);
 int	find_moves(t_stacks *stacks);
 int	find_moves_b(t_stacks *stacks, int a_pointer);
 int	find_real_moves_b(t_stacks *stacks, int a_pointer);
