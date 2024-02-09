@@ -117,31 +117,32 @@ int	init(t_stacks *stacks)
 int	main(int argc, char **argv)
 {
 	int			i;
-//	int			j;
 	t_stacks	stacks;
 
 	i = 1;
 	if (argc > 1)
 	{
 		if (input_data(&stacks, argc, argv))
-			return (write(1, "Error\n", 6));
+			return (write(2, "Error\n", 6));
 	}
 	else
 		return (0);
-	if (argc == 4)
-		return (three_n(&stacks));
+	if (special_cases(&stacks, argc - 1))
+	{
+		free(stacks.stack_a);
+		free(stacks.stack_b);
+		return (0);
+	}
 	i = 0;
 	while (i < stacks.stack_a_counter)
 	{
 		push_a_2_b(&stacks);
-//		print(&stacks);
 		i++;
 		stacks.stack_a_pointer++;
 	}
-	push_a(&stacks);
+	push_all(&stacks);
 	free(stacks.stack_a);
 	free(stacks.stack_b);
-//	print(&stacks);
 /*
 	while (stacks.stack_a_counter > 0)
 	{

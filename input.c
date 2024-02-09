@@ -85,7 +85,6 @@ int	input_data(t_stacks *stacks, int argc, char **argv)
 	int	i;
 
 	i = 1;
-	(void) argv;
 	if (create_arrays(stacks, argc - 1))
 		return (1);
 	while (i < argc)
