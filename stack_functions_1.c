@@ -33,6 +33,7 @@ int	push_b(t_stacks *stacks, int j)
 {
 	int	i;
 
+	write(1, "pb\n", 3);
 	stacks->stack_b_counter++;
 	i = stacks->stack_b_counter - 1;
 	while (i > stacks->stack_b_pointer)
@@ -88,11 +89,13 @@ int	swaps_pushes(t_stacks *stacks)
 		if (stacks->stack_a[2][j] > 0
 		&& stacks->stack_a[2][j + 1] < 0)
 		{
+			write(1, "sa\n", 3);
 			swap_a(stacks, j);
 			res = 0;
 		}
 		if (stacks->stack_a[2][j] == 0)
 		{
+			write(1, "pb\n", 3);
 			find_position_b(stacks, j);
 //			push_b(stacks, j);
 /*
@@ -105,10 +108,13 @@ int	swaps_pushes(t_stacks *stacks)
 */
 			pull_a(stacks, j);
 			n = stacks->stack_a_counter;
-			print(stacks);
+//			print(stacks);
 		}
 		else
+		{
+			write(1, "rra\n", 4);
 			j++;
+		}
 	}
 	return (res);
 }
@@ -138,6 +144,7 @@ int	swap_b(t_stacks *stacks, int i)
 
 	if (stacks->stack_b_counter < 2)
 		return (0);
+	write(1, "sb\n", 3);
 	j = (i + 1) % stacks->stack_b_counter;
 	swap = stacks->stack_b[0][i];
 	stacks->stack_b[0][i] = stacks->stack_b[0][j];

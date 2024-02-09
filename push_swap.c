@@ -100,9 +100,8 @@ int	init(t_stacks *stacks)
 
 	i = 0;
 	stacks->stack_a_pointer = 0;
-	stacks->stack_b_counter = 0; //stacks->stack_a_counter;
+	stacks->stack_b_counter = 0;
 	stacks->stack_b_pointer = 0;
-	stacks->b_counter = stacks->stack_a_counter;
 	while (i < stacks->stack_a_counter)
 	{
 		stacks->stack_b[1][i] = -1;
@@ -112,7 +111,6 @@ int	init(t_stacks *stacks)
 	if (bubble_sort(stacks))
 		return (1);
 	find_moves(stacks);
-	print(stacks);
 	return (0);
 }
 
@@ -130,32 +128,38 @@ int	main(int argc, char **argv)
 	}
 	else
 		return (0);
-/*
+	if (argc == 4)
+		return (three_n(&stacks));
 	i = 0;
 	while (i < stacks.stack_a_counter)
 	{
-		printf("A[%d] = %d, B = ", i, stacks.stack_a[0][i]);
-		find_position_b(&stacks, i);
-		j = 0;
-		while (j < stacks.stack_b_counter)
-		{
-			printf("%d, ", stacks.stack_b[0][j]);
-			j++;
-		}
+		push_a_2_b(&stacks);
+//		print(&stacks);
 		i++;
-		printf("\n");
+		stacks.stack_a_pointer++;
 	}
-*/
+	push_a(&stacks);
+	free(stacks.stack_a);
+	free(stacks.stack_b);
+//	print(&stacks);
+/*
 	while (stacks.stack_a_counter > 0)
 	{
 		if (swaps_pushes(&stacks) && stacks.stack_a_counter > 0)
 		{
 			if (stacks.stack_a[2][0] > 0)
+			{
+				write(1, "ra\n", 3);
 				rotate_a (&stacks, -1);
+			}
 			else
+			{
+				write(1, "rra\n", 4);
 				rotate_a (&stacks, 1);
+			}
 		}
-//		print(&stacks);
 	}
+	push_a(&stacks);
+*/
 	return (0);
 }

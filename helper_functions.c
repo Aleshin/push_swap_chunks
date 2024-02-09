@@ -99,6 +99,10 @@ int	input_data(t_stacks *stacks, int argc, char **argv)
 		i++;
 	}
 	if (init(stacks))
+	{
+		free(stacks->stack_a);
+		free(stacks->stack_b);
 		return (1);
+	}
 	return (0);
 }

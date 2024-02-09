@@ -29,6 +29,8 @@ int	three_n(t_stacks *stacks)
 		write(1, "ra\n", 3);
 	else
 		write(1, "ra\nsa\n", 6);
+	free(stacks->stack_a);
+	free(stacks->stack_b);
 	return (0);
 }
 
@@ -37,6 +39,10 @@ int	rotate_a(t_stacks *stacks, int direction)
 	int	i;
 
 	i = 0;
+	if (direction > 0)
+		write(1, "rra\n", 4);
+	else
+		write(1, "ra\n", 3);
 	while (i < stacks->stack_a_counter)
 	{
 		stacks->stack_a[2][i] = stacks->stack_a[2][i] + direction;
@@ -51,9 +57,34 @@ int	rotate_a(t_stacks *stacks, int direction)
 
 int	rotate_b(t_stacks *stacks, int direction)
 {
+	if (direction > 0)
+		write(1, "rb\n", 3);
+	else
+		write(1, "rrb\n", 4);
 	stacks->stack_b_pointer = (stacks->stack_b_pointer + direction)
 		% stacks->stack_b_counter;
 	if (stacks->stack_b_pointer < 0)
 		stacks->stack_b_pointer = stacks->stack_b_counter - 1;
+	return (0);
+}
+
+int	push_a(t_stacks *stacks)
+{
+	int	i;
+
+	i = 0;
+//	print(stacks);
+	move_b_pointer(stacks, find_moves_b(stacks, 0));
+	stacks->stack_a_counter = stacks->stack_b_counter;
+	stacks->stack_a_pointer = 0;
+	while (i < stacks->stack_b_counter)
+	{
+		write(1, "pa\n", 3);
+		stacks->stack_a[0][i] = stacks->stack_b[0][stacks->stack_a_counter - i - 1];
+		stacks->stack_a[1][i] = stacks->stack_b[1][i];
+		stacks->stack_a[2][i] = 0;
+		i++;
+	}
+//	print(stacks);
 	return (0);
 }
