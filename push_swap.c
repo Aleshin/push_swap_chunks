@@ -94,6 +94,36 @@ int	print(t_stacks *stacks)
 	return (0);
 }
 
+int	print_ab(t_stacks *stacks)
+{
+	int	i;
+	int	pointer;
+	int	counter;
+
+	i = 0;
+	pointer = stacks->stack_a_pointer;
+	counter = stacks->stack_a_counter;
+	printf("A, pointer: %d, counter: %d: ", stacks->stack_a_pointer, stacks->stack_a_counter);
+	while (i < counter)
+	{
+		printf("%d,\t", stacks->stack_a[0][pointer % counter]);
+		pointer++;
+		i++;
+	}
+	printf("\n\n");
+	pointer = stacks->stack_b_pointer;
+	counter = stacks->stack_b_counter;
+	printf("B: ");
+	while (i < counter)
+	{
+		printf("%d,\t", stacks->stack_b[0][pointer % counter]);
+		pointer++;
+		i++;
+	}
+	printf("\n\n");
+	return (0);
+}
+
 int	init(t_stacks *stacks)
 {
 	int	i;

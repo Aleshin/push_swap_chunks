@@ -62,6 +62,7 @@ int	push_b(t_stacks *stacks, int j)
 	}
 	stacks->stack_b[0][i] = stacks->stack_a[0][j];
 	stacks->stack_b[1][i] = stacks->stack_a[1][j];
+	pull_a(stacks, j);
 	return (0);
 }
 
@@ -69,13 +70,11 @@ int	swaps_pushes(t_stacks *stacks)
 {
 	int	j;
 	int	n;
-	int	m;
 	int	res;
 
 	j = 0;
 	res = 1;
 	n = stacks->stack_a_counter;
-	m = stacks->stack_b_counter;
 	while (j < n)
 	{
 		if (stacks->stack_a[2][j] > 0
