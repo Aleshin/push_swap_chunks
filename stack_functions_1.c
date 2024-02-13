@@ -26,6 +26,20 @@ int	pull_a(t_stacks *stacks, int i)
 		i++;
 	}
 	(stacks->stack_a_counter)--;
+//	if (--(stacks->stack_a_pointer) == -1)
+//		stacks->stack_a_pointer = stacks->stack_a_counter - 1;
+	return (0);
+}
+
+int	pull_b(t_stacks *stacks, int i)
+{
+	while (i < stacks->stack_b_counter - 1)
+	{
+		stacks->stack_b[0][i] = stacks->stack_b[0][i + 1];
+		stacks->stack_b[1][i] = stacks->stack_b[1][i + 1];
+		i++;
+	}
+	(stacks->stack_b_counter)--;
 	return (0);
 }
 
@@ -44,6 +58,7 @@ int	push_a(t_stacks *stacks, int j)
 	}
 	stacks->stack_a[0][i] = stacks->stack_b[0][j];
 	stacks->stack_a[1][i] = stacks->stack_b[1][j];
+	pull_b(stacks, j);
 	return (0);
 }
 
@@ -105,6 +120,7 @@ int	swap_a(t_stacks *stacks, int i)
 	int	j;
 	int	swap;
 
+	write(1, "sa\n", 3);
 	j = (i + 1) % stacks->stack_a_counter;
 	swap = stacks->stack_a[0][i];
 	stacks->stack_a[0][i] = stacks->stack_a[0][j];

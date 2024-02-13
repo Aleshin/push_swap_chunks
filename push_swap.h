@@ -52,6 +52,8 @@ int	find_moves_a(t_stacks *stacks, int p);
 int	find_moves_b(t_stacks *stacks, int p);
 int	move_a_pointer(t_stacks *stacks, int m);
 int	move_b_pointer(t_stacks *stacks, int m);
+int	pointer_a_2_min(t_stacks *stacks);
+int	pointer_b_2_max(t_stacks *stacks);
 int push_a_2_b(t_stacks *stacks);
 int push_b_2_a(t_stacks *stacks);
 int	find_real_moves_b(t_stacks *stacks, int a_pointer);

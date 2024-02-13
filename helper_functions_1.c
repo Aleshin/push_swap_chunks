@@ -15,19 +15,24 @@ int	find_position_a(t_stacks *stacks, int b_pointer)
 {
 	int	i;
 	int	m;
+	int	a_pointer;
+	int a_counter;
 
 	i = 0;
-	m = 0;
-	while (i < stacks->stack_a_counter)
+	a_pointer = stacks->stack_a_pointer;
+	a_counter = stacks->stack_a_counter;
+	m = a_pointer;
+	while (i < a_counter)
 	{
-		if (stacks->stack_b[1][b_pointer] < stacks->stack_a[1][i])
+		if (stacks->stack_b[0][b_pointer] > stacks->stack_a[0][a_pointer % a_counter])
 		{
-			if (i + 1 < stacks->stack_a_counter)
-				m = i + 1;
+			if (i + 1 < a_counter)
+				m = (a_pointer + 1) % a_counter;
 			else
 				m = -1;
 		}
 		i++;
+		a_pointer++;
 	}
 	return (m);
 }
@@ -38,10 +43,10 @@ int	find_position_b(t_stacks *stacks, int a_pointer)
 	int	m;
 
 	i = 0;
-	m = 0;
+	m = stacks->stack_b_pointer;
 	while (i < stacks->stack_b_counter)
 	{
-		if (stacks->stack_a[1][a_pointer] > stacks->stack_b[1][i])
+		if (stacks->stack_a[0][a_pointer] > stacks->stack_b[0][i])
 		{
 			if (i + 1 < stacks->stack_b_counter)
 				m = i + 1;
@@ -127,17 +132,19 @@ int push_b_2_a(t_stacks *stacks)
 {
 	int	m;
 
-	m = find_position_b(stacks, stacks->stack_b_pointer);
+	m = find_position_a(stacks, stacks->stack_b_pointer);
+//	printf("pos = %d, mov = %d\n", m, find_moves_a(stacks, m));
 	if (m == -1)
 	{
-		move_a_pointer(stacks, find_moves_a(stacks, stacks->stack_a_counter - 1));
+//		move_a_pointer(stacks, find_moves_a(stacks, stacks->stack_a_counter - 1));
 		push_a(stacks, stacks->stack_b_pointer);
-		swap_a(stacks, stacks->stack_a_pointer);
+		rotate_a(stacks, 1);
+//		swap_a(stacks, stacks->stack_a_pointer);
 	}
 	else
 	{
 		move_a_pointer(stacks, find_moves_a(stacks, m));
-		push_a(stacks, stacks->stack_a_pointer);
+		push_a(stacks, stacks->stack_b_pointer);
 	}
 	return (0);
 }

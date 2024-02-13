@@ -62,6 +62,8 @@ int	ft_atoi(const char *str, t_stacks *stacks)
 
 	i = 0;
 	sign = 1;
+	if (!str[0] || (str[0] == '-' && str[1] == '\0'))
+		return (1);
 	if (str[i] == '-')
 	{
 		sign = -1;

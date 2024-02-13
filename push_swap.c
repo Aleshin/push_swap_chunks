@@ -110,7 +110,8 @@ int	print_ab(t_stacks *stacks)
 		pointer++;
 		i++;
 	}
-	printf("\n\n");
+	printf("\n");
+	i = 0;
 	pointer = stacks->stack_b_pointer;
 	counter = stacks->stack_b_counter;
 	printf("B: ");
@@ -156,7 +157,9 @@ int	main(int argc, char **argv)
 			return (write(2, "Error\n", 6));
 	}
 	else
-		return (0);
+		return (write(2, "Error\n", 6));
+//	rotate_a(&stacks, -1);
+//	print_ab(&stacks);
 	if (special_cases(&stacks, argc - 1))
 	{
 		free(stacks.stack_a);
@@ -173,6 +176,7 @@ int	main(int argc, char **argv)
 	push_all(&stacks);
 	free(stacks.stack_a);
 	free(stacks.stack_b);
+
 /*
 	while (stacks.stack_a_counter > 0)
 	{
