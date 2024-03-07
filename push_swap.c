@@ -24,7 +24,7 @@ int	bubble_sort(t_stacks *stacks)
 		j = 0;
 		while (j < stacks->stack_a_counter - 1)
 		{
-			if (stacks->stack_b[0][j] < stacks->stack_b[0][j + 1])
+			if (stacks->stack_b[0][j] > stacks->stack_b[0][j + 1])
 			{
 				swap = stacks->stack_b[0][j];
 				stacks->stack_b[0][j] = stacks->stack_b[0][j + 1];
@@ -64,6 +64,23 @@ int	find_moves(t_stacks *stacks)
 	return (0);
 }
 
+int	find_chunks(t_stacks *stacks)
+{
+	int	i;
+	int	chunk_no;
+
+	i = 0;
+	while (i < stacks->numbers)
+	{
+		chunk_no = stacks->stack_a[1][i] / stacks->chunk_size;
+		if (chunk_no == stacks->chunks)
+			chunk_no--;
+		stacks->stack_a[2][i] = chunk_no;
+		i++;
+	}
+	return (0);
+}
+
 int	print(t_stacks *stacks)
 {
 	int	i;
@@ -94,37 +111,6 @@ int	print(t_stacks *stacks)
 	return (0);
 }
 
-int	print_ab(t_stacks *stacks)
-{
-	int	i;
-	int	pointer;
-	int	counter;
-
-	i = 0;
-	pointer = stacks->stack_a_pointer;
-	counter = stacks->stack_a_counter;
-	printf("A, pointer: %d, counter: %d: ", stacks->stack_a_pointer, stacks->stack_a_counter);
-	while (i < counter)
-	{
-		printf("%d,\t", stacks->stack_a[0][pointer % counter]);
-		pointer++;
-		i++;
-	}
-	printf("\n");
-	i = 0;
-	pointer = stacks->stack_b_pointer;
-	counter = stacks->stack_b_counter;
-	printf("B: ");
-	while (i < counter)
-	{
-		printf("%d,\t", stacks->stack_b[0][pointer % counter]);
-		pointer++;
-		i++;
-	}
-	printf("\n\n");
-	return (0);
-}
-
 int	init(t_stacks *stacks)
 {
 	int	i;
@@ -133,6 +119,9 @@ int	init(t_stacks *stacks)
 	stacks->stack_a_pointer = 0;
 	stacks->stack_b_counter = 0;
 	stacks->stack_b_pointer = 0;
+	stacks->numbers = stacks->stack_a_counter;
+	stacks->chunks = 5;
+	stacks->chunk_size = stacks->stack_a_counter / stacks->chunks;
 	while (i < stacks->stack_a_counter)
 	{
 		stacks->stack_b[1][i] = -1;
@@ -142,6 +131,7 @@ int	init(t_stacks *stacks)
 	if (bubble_sort(stacks))
 		return (1);
 	find_moves(stacks);
+	find_chunks(stacks);
 	return (0);
 }
 
@@ -158,14 +148,20 @@ int	main(int argc, char **argv)
 	}
 	else
 		return (write(2, "Error\n", 6));
-//	rotate_a(&stacks, -1);
-//	print_ab(&stacks);
+	print(&stacks);
+	scan_a(&stacks);
+	print(&stacks);
+	scan_b(&stacks);
+	print(&stacks);
+/*
 	if (special_cases(&stacks, argc - 1))
 	{
+        print(&stacks);
 		free(stacks.stack_a);
 		free(stacks.stack_b);
 		return (0);
 	}
+
 	i = 0;
 	while (i < stacks.stack_a_counter)
 	{
@@ -174,10 +170,10 @@ int	main(int argc, char **argv)
 		stacks.stack_a_pointer++;
 	}
 	push_all(&stacks);
+	print(&stacks);
 	free(stacks.stack_a);
 	free(stacks.stack_b);
 
-/*
 	while (stacks.stack_a_counter > 0)
 	{
 		if (swaps_pushes(&stacks) && stacks.stack_a_counter > 0)

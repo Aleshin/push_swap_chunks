@@ -27,15 +27,15 @@ int	three_n(t_stacks *stacks)
 			swap_a(stacks, stacks->stack_a_pointer);
 	}
 	else if (stacks->stack_a[0][1] > stacks->stack_a[0][2])
+	{
+		if (stacks->stack_a[0][0] > stacks->stack_a[0][2])
+			rotate_a(stacks, -1);
+		else
 		{
-			if (stacks->stack_a[0][0] > stacks->stack_a[0][2])
-				rotate_a(stacks, -1);
-			else
-			{
-				rotate_a(stacks, -1);
-				swap_a(stacks, stacks->stack_a_pointer);
-			}
+			rotate_a(stacks, -1);
+			swap_a(stacks, stacks->stack_a_pointer);
 		}
+	}
 	return (0);
 }
 
@@ -50,21 +50,13 @@ int	four_n(t_stacks *stacks)
 
 int	five_n(t_stacks *stacks)
 {
-	print_ab(stacks);
 	push_a_2_b(stacks);
-	print_ab(stacks);
 	push_a_2_b(stacks);
-	print_ab(stacks);
 	three_n(stacks);
-	print_ab(stacks);
 	pointer_b_2_max(stacks);
-	print_ab(stacks);
 	push_b_2_a(stacks);
-	print_ab(stacks);
 	push_b_2_a(stacks);
-	print_ab(stacks);
 	pointer_a_2_min(stacks);
-	print_ab(stacks);
 	return (0);
 }
 

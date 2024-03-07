@@ -136,7 +136,7 @@ int push_b_2_a(t_stacks *stacks)
 //	printf("pos = %d, mov = %d\n", m, find_moves_a(stacks, m));
 	if (m == -1)
 	{
-//		move_a_pointer(stacks, find_moves_a(stacks, stacks->stack_a_counter - 1));
+		move_a_pointer(stacks, find_moves_a(stacks, stacks->stack_a_counter - 1));
 		push_a(stacks, stacks->stack_b_pointer);
 		rotate_a(stacks, 1);
 //		swap_a(stacks, stacks->stack_a_pointer);
