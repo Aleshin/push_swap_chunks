@@ -14,51 +14,56 @@
 int	scan_a(t_stacks *stacks)
 {
 	int	n;
+	int rotates;
 
 	n = 0;
 	while (n < stacks->chunks)
 	{
-		find_num_in_chunk(stacks, n++);
+		rotates = find_ra(stacks, n);
+		if (rotates != -1)
+		{
+			print_moves("ra", rotates);
+			stacks->stack_a_pointer = (stacks->stack_a_pointer + rotates) % stacks->stack_a_counter;
+			push_b(stacks);
+        }
+        else
+            n++;
 	}
 	return (0);
 }
 
-int	find_num_in_chunk(t_stacks *stacks, int chunk_no)
+int	find_ra(t_stacks *stacks, int chunk_no)
 {
-	int	i;
+	int	rotates;
+    int pos;
 
-	i = 0;
-	while (i < stacks->stack_a_counter)
+    rotates = 0;
+	pos = stacks->stack_a_pointer;
+	while (rotates < stacks->stack_a_counter)
 	{
-		if (stacks->stack_a[2][i] == chunk_no)
-		{
-			push_b(stacks, i);
-		}
+		if (stacks->stack_a[2][pos] == chunk_no)
+			return (rotates);
 		else
-			i++;
-	}
-	return (0);
+        {
+			pos = (pos + 1) % stacks->stack_a_counter;
+            rotates++;
+        }
+	}	
+	return (-1);
 }
 
 int	scan_b(t_stacks *stacks)
 {
 	int	i;
-	int	j;
 
 	i = stacks->numbers - 1;
 	while (i >= 0)
 	{
-		j = 0;
-		while (j < stacks->stack_b_counter)
-		{
-			if (stacks->stack_b[1][j] == i)
-			{
-				push_a(stacks, j);
-			}
-			else
-				j++;
-		}
-		i--;
-	}
+		while (stacks->stack_b[1][stacks->stack_b_pointer] != i)
+            stacks->stack_b_pointer = (stacks->stack_b_pointer +1) % stacks->stack_b_counter;
+        push_a(stacks);
+//			write(1, "rb\n", 3);
+	i--;
+    }
 	return (0);
 }

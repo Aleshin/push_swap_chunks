@@ -73,8 +73,8 @@ int	find_chunks(t_stacks *stacks)
 	while (i < stacks->numbers)
 	{
 		chunk_no = stacks->stack_a[1][i] / stacks->chunk_size;
-		if (chunk_no == stacks->chunks)
-			chunk_no--;
+		if (chunk_no >= stacks->chunks)
+			chunk_no = stacks->chunks -1;
 		stacks->stack_a[2][i] = chunk_no;
 		i++;
 	}
@@ -131,7 +131,6 @@ int	init(t_stacks *stacks)
 	if (bubble_sort(stacks))
 		return (1);
 	find_moves(stacks);
-	find_chunks(stacks);
 	return (0);
 }
 
@@ -147,21 +146,20 @@ int	main(int argc, char **argv)
 			return (write(2, "Error\n", 6));
 	}
 	else
-		return (write(2, "Error\n", 6));
-	print(&stacks);
-	scan_a(&stacks);
-	print(&stacks);
-	scan_b(&stacks);
-	print(&stacks);
-/*
+		return (0);
 	if (special_cases(&stacks, argc - 1))
 	{
-        print(&stacks);
 		free(stacks.stack_a);
 		free(stacks.stack_b);
 		return (0);
 	}
-
+    print(&stacks);
+//    find_ra(&stacks, 0);
+	scan_a(&stacks);
+//    printf("\n");
+	scan_b(&stacks);
+    print(&stacks);
+/*
 	i = 0;
 	while (i < stacks.stack_a_counter)
 	{

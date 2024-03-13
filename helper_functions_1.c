@@ -137,14 +137,14 @@ int push_b_2_a(t_stacks *stacks)
 	if (m == -1)
 	{
 		move_a_pointer(stacks, find_moves_a(stacks, stacks->stack_a_counter - 1));
-		push_a(stacks, stacks->stack_b_pointer);
+		push_a(stacks);
 		rotate_a(stacks, 1);
 //		swap_a(stacks, stacks->stack_a_pointer);
 	}
 	else
 	{
 		move_a_pointer(stacks, find_moves_a(stacks, m));
-		push_a(stacks, stacks->stack_b_pointer);
+		push_a(stacks);
 	}
 	return (0);
 }
@@ -157,13 +157,13 @@ int push_a_2_b(t_stacks *stacks)
 	if (m == -1)
 	{
 		move_b_pointer(stacks, find_moves_b(stacks, stacks->stack_b_counter - 1));
-		push_b(stacks, stacks->stack_a_pointer);
+		push_b(stacks);
 		swap_b(stacks, stacks->stack_b_pointer);
 	}
 	else
 	{
 		move_b_pointer(stacks, find_moves_b(stacks, m));
-		push_b(stacks, stacks->stack_a_pointer);
+		push_b(stacks);
 	}
 	return (0);
 }
