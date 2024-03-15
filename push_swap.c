@@ -120,7 +120,12 @@ int	init(t_stacks *stacks)
 	stacks->stack_b_counter = 0;
 	stacks->stack_b_pointer = 0;
 	stacks->numbers = stacks->stack_a_counter;
-	stacks->chunks = 5;
+	if (stacks->numbers <= 100)
+		stacks->chunks = 5;
+	else if (stacks->numbers <= 500)
+		stacks->chunks = 14;
+	else
+		stacks->chunks = stacks->numbers / 50;
 	stacks->chunk_size = stacks->stack_a_counter / stacks->chunks;
 	while (i < stacks->stack_a_counter)
 	{
@@ -153,42 +158,9 @@ int	main(int argc, char **argv)
 		free(stacks.stack_b);
 		return (0);
 	}
-    print(&stacks);
-//    find_ra(&stacks, 0);
 	scan_a(&stacks);
-//    printf("\n");
 	scan_b(&stacks);
-    print(&stacks);
-/*
-	i = 0;
-	while (i < stacks.stack_a_counter)
-	{
-		push_a_2_b(&stacks);
-		i++;
-		stacks.stack_a_pointer++;
-	}
-	push_all(&stacks);
-	print(&stacks);
 	free(stacks.stack_a);
 	free(stacks.stack_b);
-
-	while (stacks.stack_a_counter > 0)
-	{
-		if (swaps_pushes(&stacks) && stacks.stack_a_counter > 0)
-		{
-			if (stacks.stack_a[2][0] > 0)
-			{
-				write(1, "ra\n", 3);
-				rotate_a (&stacks, -1);
-			}
-			else
-			{
-				write(1, "rra\n", 4);
-				rotate_a (&stacks, 1);
-			}
-		}
-	}
-	push_a(&stacks);
-*/
 	return (0);
 }

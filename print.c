@@ -11,25 +11,25 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i] != '\0')
-        i++;
-    return (i);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
-int print_moves(char *str, int c)
+int	print_moves(char *str, int c)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (i++ < c)
-    {
-        write (1, str, ft_strlen(str));
-        write (1, "\n", 1);
-    }
-    return (0);
+	i = 0;
+	while (i++ < c)
+	{
+		write (1, str, ft_strlen(str));
+		write (1, "\n", 1);
+	}
+	return (0);
 }

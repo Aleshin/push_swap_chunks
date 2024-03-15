@@ -34,32 +34,38 @@ int	three_n(t_stacks *stacks)
 
 int	four_n(t_stacks *stacks)
 {
-//	int	i;
-	push_a_2_b(stacks);
-//	print(stacks);
+	push_b(stacks);
 	three_n(stacks);
-//	print(stacks);
-	push_b_2_a(stacks);
-	pointer_a_2_min(stacks);
-//	print(stacks);
-/*
-	while (i < stacks.stack_a_counter)
+	if (stacks->stack_b[1][0] < 2)
 	{
-		push_a_2_b(&stacks);
-		i++;
-		stacks.stack_a_pointer++;
+		ra(stacks, stacks->stack_b[1][0]);
+		push_a(stacks);
+		rra(stacks, stacks->stack_b[1][0]);
 	}
-*/
+	else if (stacks->stack_b[1][0] == 2)
+	{
+		rra(stacks, 1);
+		push_a(stacks);
+		ra(stacks, 2);
+	}
+	else
+	{
+		push_a(stacks);
+		ra(stacks, 1);
+	}
 	return (0);
 }
 
 int	five_n(t_stacks *stacks)
 {
+	(void)stacks;
+/*
 	push_a_2_b(stacks);
 	push_a_2_b(stacks);
 	three_n(stacks);
 	push_b_2_a(stacks);
 	push_b_2_a(stacks);
+*/
 	return (0);
 }
 
@@ -89,77 +95,5 @@ int	special_cases(t_stacks *stacks, int args)
 		return (1);
 	}
 	find_chunks(stacks);
-	return (0);
-}
-
-int	rotate_a(t_stacks *stacks, int direction)
-{
-	int	i;
-
-	i = 0;
-	if (direction > 0)
-		write(1, "rra\n", 4);
-	else
-		write(1, "ra\n", 3);
-	while (i < stacks->stack_a_counter)
-	{
-		stacks->stack_a[2][i] = stacks->stack_a[2][i] + direction;
-		i++;
-	}
-	stacks->stack_a_pointer = (stacks->stack_a_pointer + direction)
-		% stacks->stack_a_counter;
-	if (stacks->stack_a_pointer < 0)
-		stacks->stack_a_pointer = stacks->stack_a_counter;
-	return (0);
-}
-
-int	rotate_b(t_stacks *stacks, int direction)
-{
-    if (stacks->stack_b_counter < 2)
-        return (0);
-	if (direction > 0)
-		write(1, "rb\n", 3);
-	else
-		write(1, "rrb\n", 4);
-	stacks->stack_b_pointer = (stacks->stack_b_pointer + direction)
-		% stacks->stack_b_counter;
-	if (stacks->stack_b_pointer < 0)
-		stacks->stack_b_pointer = stacks->stack_b_counter - 1;
-	return (0);
-}
-
-int	push_all(t_stacks *stacks)
-{
-	int	i;
-
-	i = 0;
-	move_b_pointer(stacks, find_moves_b(stacks, 0));
-	stacks->stack_a_counter = stacks->stack_b_counter;
-	stacks->stack_a_pointer = 0;
-	while (i < stacks->stack_b_counter)
-	{
-		write(1, "pa\n", 3);
-		stacks->stack_a[0][i] = stacks->stack_b[0][stacks->stack_a_counter - i - 1];
-		stacks->stack_a[1][i] = stacks->stack_b[1][i];
-		stacks->stack_a[2][i] = 0;
-		i++;
-	}
-	return (0);
-}
-
-int	pointer_a_2_min(t_stacks *stacks)
-{
-	int	i;
-	int	m;
-
-	i = 0;
-	m = 0;
-	while (i < stacks->stack_a_counter)
-	{
-		if (stacks->stack_a[0][m] > stacks->stack_a[0][i])
-			m = i;
-		i++;
-	}
-	move_a_pointer(stacks, find_moves_a(stacks, m));
 	return (0);
 }
