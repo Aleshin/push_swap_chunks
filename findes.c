@@ -31,28 +31,6 @@ int	find_ra(t_stacks *stacks, int chunk_no)
 	return (-1);
 }
 
-int	find_rra(t_stacks *stacks, int chunk_no)
-{
-	int	rotates;
-	int	pos;
-
-	rotates = 0;
-	pos = stacks->stack_a_pointer;
-	while (rotates < stacks->stack_a_counter)
-	{
-		if (stacks->stack_a[2][pos] == chunk_no)
-			return (rotates);
-		else
-		{
-			pos--;
-			if (pos == -1)
-				pos = stacks->stack_a_counter - 1;
-			rotates++;
-		}
-	}
-	return (-1);
-}
-
 int	find_rb(t_stacks *stacks, int n)
 {
 	int	rotates;
@@ -73,24 +51,36 @@ int	find_rb(t_stacks *stacks, int n)
 	return (-1);
 }
 
-int	find_rrb(t_stacks *stacks, int n)
+int	find_place(t_stacks *stacks)
 {
-	int	rotates;
-	int	pos;
+	int	i;
+	int	res;
+	int	pointer;
+	int	min;
+	int	max;
 
-	rotates = 0;
-	pos = stacks->stack_b_pointer;
-	while (rotates < stacks->stack_b_counter)
+	i = 0;
+	res = 0;
+	pointer = stacks->stack_a_pointer;
+	min = 6;
+	max = -1;
+	while (i < stacks->stack_a_counter)
 	{
-		if (stacks->stack_b[1][pos] == n)
-			return (rotates);
-		else
+		if (stacks->stack_a[1][pointer] < stacks->stack_b[1][0])
 		{
-			pos--;
-			if (pos == -1)
-				pos = stacks->stack_b_counter - 1;
-			rotates++;
+			if (stacks->stack_a[1][pointer] > max)
+			{
+				max = stacks->stack_a[1][pointer];
+				res = i;
+			}
 		}
+		else if (stacks->stack_a[1][pointer] < min)
+		{
+			min = stacks->stack_a[1][pointer];
+			res = i - 1;
+		}
+		pointer = (pointer + 1) % stacks->stack_a_counter;
+		i++;
 	}
-	return (-1);
+	return (++res);
 }

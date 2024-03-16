@@ -15,23 +15,21 @@ int	scan_a(t_stacks *stacks)
 {
 	int	n;
 	int	rotates;
-	int	rotates_r;
 
 	n = 0;
 	while (n < stacks->chunks)
 	{
 		rotates = find_ra(stacks, n);
-		rotates_r = find_rra(stacks, n);
-		if (rotates == -1 || rotates_r == -1)
+		if (rotates == -1)
 			n++;
-		else if (rotates <= rotates_r)
+		else if (rotates <= stacks->stack_a_counter / 2)
 		{
 			ra(stacks, rotates);
 			push_b(stacks);
 		}
 		else
 		{
-			rra(stacks, rotates_r);
+			rra(stacks, stacks->stack_a_counter - rotates);
 			push_b(stacks);
 		}
 	}
@@ -42,23 +40,21 @@ int	scan_b(t_stacks *stacks)
 {
 	int	n;
 	int	rotates;
-	int	rotates_r;
 
 	n = stacks->numbers - 1;
 	while (n >= 0)
 	{
 		rotates = find_rb(stacks, n);
-		rotates_r = find_rrb(stacks, n);
-		if (rotates == -1 || rotates_r == -1)
+		if (rotates == -1)
 			n--;
-		else if (rotates <= rotates_r)
+		else if (rotates <= stacks->stack_b_counter / 2)
 		{
 			rb(stacks, rotates);
 			push_a(stacks);
 		}
 		else
 		{
-			rrb(stacks, rotates_r);
+			rrb(stacks, stacks->stack_b_counter - rotates);
 			push_a(stacks);
 		}
 	}

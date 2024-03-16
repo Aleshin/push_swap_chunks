@@ -19,16 +19,22 @@ int	three_n(t_stacks *stacks)
 		if (stacks->stack_a[0][1] < stacks->stack_a[0][2])
 			return (0);
 		else if (stacks->stack_a[0][0] < stacks->stack_a[0][2])
-			write(1, "rra\nsa\n", 7);
+		{
+			rra(stacks, 1);
+			swap_a(stacks, stacks->stack_a_pointer);
+		}
 		else
-			write (1, "rra\n", 4);
+			rra(stacks, 1);
 	}
 	else if (stacks->stack_a[0][0] < stacks->stack_a[0][2])
-		write(1, "sa\n", 3);
+		swap_a(stacks, stacks->stack_a_pointer);
 	else if (stacks->stack_a[0][1] < stacks->stack_a[0][2])
-		write(1, "ra\n", 3);
+		ra(stacks, 1);
 	else
-		write(1, "ra\nsa\n", 6);
+	{
+		ra(stacks, 1);
+		swap_a(stacks, stacks->stack_a_pointer);
+	}
 	return (0);
 }
 
@@ -58,14 +64,26 @@ int	four_n(t_stacks *stacks)
 
 int	five_n(t_stacks *stacks)
 {
-	(void)stacks;
-/*
-	push_a_2_b(stacks);
-	push_a_2_b(stacks);
+	int	pointer;
+
+	push_b(stacks);
+	push_b(stacks);
 	three_n(stacks);
-	push_b_2_a(stacks);
-	push_b_2_a(stacks);
-*/
+	if (find_place(stacks) <= stacks->stack_a_counter / 2)
+		ra(stacks, find_place(stacks));
+	else
+		rra(stacks, stacks->stack_a_counter - find_place(stacks));
+	push_a(stacks);
+	if (find_place(stacks) <= stacks->stack_a_counter / 2)
+		ra(stacks, find_place(stacks));
+	else
+		rra(stacks, stacks->stack_a_counter - find_place(stacks));
+	push_a(stacks);
+	pointer = stacks->stack_a[1][stacks->stack_a_pointer];
+	if (pointer <= stacks->stack_a_counter / 2)
+		rra(stacks, pointer);
+	else
+		ra(stacks, stacks->stack_a_counter - pointer);
 	return (0);
 }
 
@@ -91,7 +109,7 @@ int	special_cases(t_stacks *stacks, int args)
 	}
 	if (args == 5)
 	{
-		four_n(stacks);
+		five_n(stacks);
 		return (1);
 	}
 	find_chunks(stacks);
