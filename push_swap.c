@@ -81,34 +81,6 @@ int	find_chunks(t_stacks *stacks)
 	return (0);
 }
 
-int	print(t_stacks *stacks)
-{
-	int	i;
-	int	pointer;
-
-	pointer = stacks->stack_a_pointer;
-	i = 0;
-	while (i++ < stacks->stack_a_counter)
-		printf("%d,\t", stacks->stack_a[0][(pointer++) % stacks->stack_a_counter]);
-	printf("\n");
-	pointer = stacks->stack_a_pointer;
-	i = 0;
-	while (i++ < stacks->stack_a_counter)
-		printf("%d,\t", stacks->stack_a[1][(pointer++) % stacks->stack_a_counter]);
-	printf("\n");
-	pointer = stacks->stack_b_pointer;
-	i = 0;
-	while (i++ < stacks->stack_b_counter)
-		printf("%d,\t", stacks->stack_b[0][(pointer++) % stacks->stack_b_counter]);
-	printf("\n");
-	pointer = stacks->stack_b_pointer;
-	i = 0;
-	while (i++ < stacks->stack_b_counter)
-		printf("%d,\t", stacks->stack_b[1][(pointer++) % stacks->stack_b_counter]);
-	printf("\n");
-	return (0);
-}
-
 int	init(t_stacks *stacks)
 {
 	int	i;

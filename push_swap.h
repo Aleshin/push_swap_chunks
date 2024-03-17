@@ -29,6 +29,11 @@ typedef struct s_stacks
 	int	numbers;
 	int	**stack_a;
 	int	**stack_b;
+	int	fp_i;
+	int	fp_res;
+	int	fp_pointer;
+	int	fp_min;
+	int	fp_max;
 }	t_stacks;
 
 int	make_array(int ***array, int i, int j);

@@ -53,34 +53,28 @@ int	find_rb(t_stacks *stacks, int n)
 
 int	find_place(t_stacks *stacks)
 {
-	int	i;
-	int	res;
-	int	pointer;
-	int	min;
-	int	max;
-
-	i = 0;
-	res = 0;
-	pointer = stacks->stack_a_pointer;
-	min = 6;
-	max = -1;
-	while (i < stacks->stack_a_counter)
+	stacks->fp_i = 0;
+	stacks->fp_res = 0;
+	stacks->fp_pointer = stacks->stack_a_pointer;
+	stacks->fp_min = 6;
+	stacks->fp_max = -1;
+	while (stacks->fp_i < stacks->stack_a_counter)
 	{
-		if (stacks->stack_a[1][pointer] < stacks->stack_b[1][0])
+		if (stacks->stack_a[1][stacks->fp_pointer] < stacks->stack_b[1][0])
 		{
-			if (stacks->stack_a[1][pointer] > max)
+			if (stacks->stack_a[1][stacks->fp_pointer] > stacks->fp_max)
 			{
-				max = stacks->stack_a[1][pointer];
-				res = i;
+				stacks->fp_max = stacks->stack_a[1][stacks->fp_pointer];
+				stacks->fp_res = stacks->fp_i;
 			}
 		}
-		else if (stacks->stack_a[1][pointer] < min)
+		else if (stacks->stack_a[1][stacks->fp_pointer] < stacks->fp_min)
 		{
-			min = stacks->stack_a[1][pointer];
-			res = i - 1;
+			stacks->fp_min = stacks->stack_a[1][stacks->fp_pointer];
+			stacks->fp_res = stacks->fp_i - 1;
 		}
-		pointer = (pointer + 1) % stacks->stack_a_counter;
-		i++;
+		stacks->fp_pointer = (stacks->fp_pointer + 1) % stacks->stack_a_counter;
+		stacks->fp_i++;
 	}
-	return (++res);
+	return (++stacks->fp_res);
 }

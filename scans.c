@@ -47,7 +47,7 @@ int	scan_b(t_stacks *stacks)
 		rotates = find_rb(stacks, n);
 		if (rotates == -1)
 			n--;
-		else if (rotates <= stacks->stack_b_counter / 2)
+		else if (rotates < stacks->stack_b_counter / 2)
 		{
 			rb(stacks, rotates);
 			push_a(stacks);
