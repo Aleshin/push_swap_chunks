@@ -45,6 +45,7 @@ int	chunk_size(t_stacks *stacks);
 int	scan_chank(t_stacks *stacks, int n);
 int	find_num_in_chunk(t_stacks *stacks, int chunk_no);
 int	find_ra(t_stacks *stacks, int chunk_no);
+int	find_rra(t_stacks *stacks, int chunk_no);
 int	find_ra_4(t_stacks *stacks, int chunk_no);
 int	find_rra_4(t_stacks *stacks, int chunk_no);
 int	find_rb(t_stacks *stacks, int n);
